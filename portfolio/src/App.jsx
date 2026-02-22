@@ -408,6 +408,17 @@ function App() {
     }
   }, [viewMode])
 
+  // Toggle global theme class for full-site styling
+  useEffect(() => {
+    const className = 'theme-noncoder'
+    if (viewMode === VIEW_MODES.nonCoder) {
+      document.body.classList.add(className)
+    } else {
+      document.body.classList.remove(className)
+    }
+    return () => document.body.classList.remove(className)
+  }, [viewMode])
+
   const processCommand = useCallback((cmd) => {
     const trimmed = cmd.trim().toLowerCase()
 
@@ -507,7 +518,7 @@ function App() {
   }
 
   return (
-    <div className="page-shell">
+    <div className={`page-shell ${viewMode === VIEW_MODES.nonCoder ? 'theme-noncoder' : 'theme-coder'}`}>
       <ThemeSwitcher viewMode={viewMode} onChange={setViewMode} />
 
       {viewMode === VIEW_MODES.coder ? (
