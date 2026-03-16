@@ -77,9 +77,9 @@ const PROJECTS_DATA = [
 ]
 
 const CONTACT_DATA = [
-  { icon: '✉', label: 'email', value: 'harshal@example.com', href: 'mailto:harshal@example.com' },
-  { icon: '⌘', label: 'github', value: 'github.com/harshal', href: 'https://github.com/harshal' },
-  { icon: '◉', label: 'linkedin', value: 'linkedin.com/in/harshal', href: 'https://linkedin.com/in/harshal' },
+  { icon: '✉', label: 'email', value: 'thoratharshal04@gmail.com', href: 'mailto:thoratharshal04@gmail.com' },
+  { icon: '⌘', label: 'github', value: 'https://github.com/Harry007056', href: 'https://github.com/Harry007056' },
+  { icon: '◉', label: 'linkedin', value: 'https://www.linkedin.com/in/harshal-thorat-431264281/', href: 'https://www.linkedin.com/in/harshal-thorat-431264281/' },
 ]
 
 const COMMANDS = ['help', 'about', 'skills', 'projects', 'contact', 'clear', 'whoami', 'date', 'neofetch', 'sudo hire-me']
@@ -272,6 +272,26 @@ function NeofetchOutput() {
   )
 }
 
+function LoadingSpinner() {
+  return (
+    <div className="global-loader">
+      <div className="world-globe">
+        <div className="globe-orbit">
+          <div className="globe">
+            <div className="continents"></div>
+            <div className="atmosphere"></div>
+          </div>
+        </div>
+      </div>
+      <div className="loader-text">
+        <span>harshal@portfolio</span>
+        <span className="loader-dots">loading</span>
+      </div>
+      <div className="loader-ascii">~</div>
+    </div>
+  )
+}
+
 function HireMeOutput() {
   return (
     <div className="output-content">
@@ -390,7 +410,8 @@ function App() {
   ])
   const [input, setInput] = useState('')
   const [cmdHistory, setCmdHistory] = useState(['about', 'skills', 'projects', 'contact'])
-  const [historyIndex, setHistoryIndex] = useState(-1)
+const [historyIndex, setHistoryIndex] = useState(-1)
+  const [isGlobalLoading, setIsGlobalLoading] = useState(true)
   const bodyRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -400,6 +421,15 @@ function App() {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight
     }
   }, [history])
+
+// Global loading simulation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsGlobalLoading(false)
+    }, 1800) // 1.8s realistic load
+
+    return () => clearTimeout(timer)
+  }, [])
 
   // Auto-focus input
   useEffect(() => {
@@ -515,6 +545,10 @@ function App() {
   const handleSuggestion = (cmd) => {
     processCommand(cmd)
     inputRef.current?.focus()
+  }
+
+  if (isGlobalLoading) {
+    return <LoadingSpinner />
   }
 
   return (
