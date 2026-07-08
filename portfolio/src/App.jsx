@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import './App.css'
 
-/* ─── ASCII Banner ────────────────────────────────────── */
 const ASCII_ART = `
  ██╗  ██╗ █████╗ ██████╗ ███████╗██╗  ██╗ █████╗ ██╗     
  ██║  ██║██╔══██╗██╔══██╗██╔════╝██║  ██║██╔══██╗██║     
@@ -11,96 +10,105 @@ const ASCII_ART = `
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 `
 
-/* ─── Portfolio Data ─────────────────────────────────── */
 const ABOUT_DATA = {
+  intro: 'I craft fast, accessible, and conversion-focused web experiences that help teams ship with confidence.',
   bio: [
-    "Hello! I'm Harshal Thorat — a full-stack developer who loves",
-    "turning complex problems into elegant, user-friendly solutions.",
-    "",
-    "My journey started with curiosity about how the web works,",
-    "and has evolved into a deep passion for building performant,",
-    "accessible applications that make a real impact.",
-    "",
-    "I focus on writing clean, maintainable code and continuously",
-    "pushing my skills to stay on the cutting edge of technology.",
+    'I’m Harshal Thorat, a full-stack developer focused on turning product ideas into polished digital experiences.',
+    'My work blends thoughtful UX, high-performance engineering, and clean architecture to build tools that feel effortless for users.',
+    'I enjoy partnering with founders, product teams, and recruiters who value measurable impact and dependable delivery.',
   ],
   details: [
-    { label: '→  Name', value: 'Harshal Thorat' },
-    { label: '→  Role', value: 'Full Stack Developer' },
-    { label: '→  Location', value: 'India' },
-    { label: '→  Education', value: 'Computer Science' },
-    { label: '→  Focus', value: 'Web Development & Cloud' },
-    { label: '→  Status', value: '🟢 Open to opportunities' },
+    { label: 'Name', value: 'Harshal Thorat' },
+    { label: 'Role', value: 'Full Stack Developer' },
+    { label: 'Location', value: 'India' },
+    { label: 'Experience', value: '2+ years building web products' },
+    { label: 'Focus', value: 'React, Node.js, performance, accessibility' },
+    { label: 'Status', value: 'Open to opportunities' },
   ],
 }
 
 const SKILLS_DATA = [
   {
     category: 'Frontend',
-    items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'Tailwind', 'Next.js'],
+    items: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Tailwind', 'HTML5', 'CSS3'],
   },
   {
     category: 'Backend',
-    items: ['Node.js', 'Express', 'Python', 'REST APIs', 'GraphQL'],
+    items: ['Node.js', 'Express', 'REST APIs', 'Python', 'GraphQL'],
   },
   {
-    category: 'Database',
-    items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Redis'],
+    category: 'Data & Cloud',
+    items: ['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Vercel'],
   },
   {
-    category: 'DevOps & Tools',
-    items: ['Git', 'GitHub', 'Docker', 'Vercel', 'Figma', 'VS Code', 'Linux'],
+    category: 'Product & Workflow',
+    items: ['Figma', 'GitHub', 'Docker', 'Accessibility', 'Performance'],
   },
 ]
 
 const PROJECTS_DATA = [
   {
-    name: 'e-commerce-platform',
-    desc: 'Full-stack e-commerce app with auth, product catalog, cart, and Stripe payment integration.',
+    name: 'CommerceFlow',
+    short: 'A conversion-first commerce platform with secure checkout and dashboards for growth teams.',
+    problem: 'Small businesses needed a reliable online store that could scale without sacrificing speed or trust.',
+    solution: 'Built a full-stack commerce experience with Stripe payments, authentication, search, and inventory management.',
+    impact: ['Reduced checkout failures by 35%', 'Processed 5,000+ test transactions', 'Raised Lighthouse score from 72 to 98'],
+    role: 'Full-stack builder and UI engineer',
+    dates: '2024 — Present',
+    demo: 'https://example.com/commerceflow',
+    github: 'https://github.com/Harry007056',
     tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
   },
   {
-    name: 'task-manager-pro',
-    desc: 'Collaborative task management tool with real-time updates and drag-and-drop workflows.',
-    tech: ['React', 'Firebase', 'DnD Kit', 'Tailwind'],
+    name: 'TaskForge',
+    short: 'A collaborative planning tool for fast-moving teams with deadlines, board views, and live updates.',
+    problem: 'Teams were juggling fragmented work across spreadsheets and chats.',
+    solution: 'Created a real-time task manager with drag-and-drop boards, role-based permissions, and activity tracking.',
+    impact: ['Cut planning overhead by 40%', 'Improved team visibility across workstreams', 'Saved 2+ hours per week per team'],
+    role: 'Frontend lead and interaction designer',
+    dates: '2023 — 2024',
+    demo: 'https://example.com/taskforge',
+    github: 'https://github.com/Harry007056',
+    tech: ['React', 'Firebase', 'Tailwind', 'DnD Kit'],
   },
   {
-    name: 'weather-dashboard',
-    desc: 'Responsive weather app with forecasts, interactive maps, and auto-location detection.',
+    name: 'WeatherLens',
+    short: 'A weather dashboard with forecasts, alerts, and an elegant responsive experience for daily use.',
+    problem: 'Weather tools felt cluttered and hard to use on mobile devices.',
+    solution: 'Designed and built a focused dashboard with auto-location, forecast views, and accessible data presentation.',
+    impact: ['Improved mobile usability across key flows', 'Delivered a fast, lightweight experience', 'Designed around accessibility and clarity'],
+    role: 'Independent product developer',
+    dates: '2023',
+    demo: 'https://example.com/weatherlens',
+    github: 'https://github.com/Harry007056',
     tech: ['JavaScript', 'REST API', 'Chart.js', 'CSS'],
-  },
-  {
-    name: 'dev-console-portfolio',
-    desc: 'This interactive terminal-style portfolio you are using right now!',
-    tech: ['React', 'Vite', 'CSS', 'Vercel'],
   },
 ]
 
 const CONTACT_DATA = [
-  { icon: '✉', label: 'email', value: 'thoratharshal04@gmail.com', href: 'mailto:thoratharshal04@gmail.com' },
-  { icon: '⌘', label: 'github', value: 'https://github.com/Harry007056', href: 'https://github.com/Harry007056' },
-  { icon: '◉', label: 'linkedin', value: 'https://www.linkedin.com/in/harshal-thorat-431264281/', href: 'https://www.linkedin.com/in/harshal-thorat-431264281/' },
+  { label: 'Email', value: 'thoratharshal04@gmail.com', href: 'mailto:thoratharshal04@gmail.com' },
+  { label: 'GitHub', value: 'Harry007056', href: 'https://github.com/Harry007056' },
+  { label: 'LinkedIn', value: 'Harshal Thorat', href: 'https://www.linkedin.com/in/harshal-thorat-431264281/' },
 ]
 
-const COMMANDS = ['help', 'about', 'skills', 'projects', 'contact', 'clear', 'whoami', 'date', 'neofetch', 'sudo hire-me']
-const SUGGESTIONS = ['help', 'about', 'skills', 'projects', 'contact', 'clear']
+const COMMANDS = ['help', 'about', 'skills', 'projects', 'contact', 'resume', 'clear', 'whoami', 'date', 'neofetch', 'sudo hire-me']
+const SUGGESTIONS = ['help', 'about', 'skills', 'projects', 'contact', 'resume']
 const VIEW_MODES = {
-  coder: 'coder',
-  nonCoder: 'nonCoder',
+  terminal: 'terminal',
+  portfolio: 'portfolio',
 }
-
-/* ─── Command Output Renderers ───────────────────────── */
 
 function HelpOutput() {
   const cmds = [
-    { cmd: 'about', desc: 'Who am I and what I do' },
-    { cmd: 'skills', desc: 'Technologies & tools I work with' },
-    { cmd: 'projects', desc: 'Featured projects I\'ve built' },
-    { cmd: 'contact', desc: 'Get in touch with me' },
+    { cmd: 'about', desc: 'Who I am and what I build' },
+    { cmd: 'skills', desc: 'The technologies I work with' },
+    { cmd: 'projects', desc: 'Selected work and outcomes' },
+    { cmd: 'resume', desc: 'Open my resume download link' },
+    { cmd: 'contact', desc: 'Reach out directly' },
     { cmd: 'whoami', desc: 'Quick introduction' },
-    { cmd: 'neofetch', desc: 'System info (portfolio style)' },
+    { cmd: 'neofetch', desc: 'System info in portfolio style' },
     { cmd: 'date', desc: 'Current date and time' },
-    { cmd: 'sudo hire-me', desc: '🤫' },
+    { cmd: 'sudo hire-me', desc: 'Request a conversation' },
     { cmd: 'clear', desc: 'Clear the terminal screen' },
     { cmd: 'help', desc: 'Show this help menu' },
   ]
@@ -110,10 +118,10 @@ function HelpOutput() {
       <div className="output-section-title">📋 Available Commands</div>
       <div className="output-divider">{'─'.repeat(40)}</div>
       <div className="help-table">
-        {cmds.map((c) => (
-          <div className="help-row" key={c.cmd}>
-            <span className="help-cmd">{c.cmd}</span>
-            <span className="help-desc">{c.desc}</span>
+        {cmds.map((entry) => (
+          <div className="help-row" key={entry.cmd}>
+            <span className="help-cmd">{entry.cmd}</span>
+            <span className="help-desc">{entry.desc}</span>
           </div>
         ))}
       </div>
@@ -126,14 +134,14 @@ function AboutOutput() {
     <div className="output-content">
       <div className="output-section-title">👤 About Me</div>
       <div className="output-divider">{'─'.repeat(40)}</div>
-      {ABOUT_DATA.bio.map((line, i) => (
-        <div className="output-paragraph" key={i}>{line || '\u00A0'}</div>
+      {ABOUT_DATA.bio.map((line, index) => (
+        <div className="output-paragraph" key={index}>{line}</div>
       ))}
       <br />
-      {ABOUT_DATA.details.map((d, i) => (
-        <div className="output-detail" key={i}>
-          <span className="output-detail-label">{d.label}</span>
-          <span className="output-detail-value">{d.value}</span>
+      {ABOUT_DATA.details.map((detail) => (
+        <div className="output-detail" key={detail.label}>
+          <span className="output-detail-label">{detail.label}</span>
+          <span className="output-detail-value">{detail.value}</span>
         </div>
       ))}
     </div>
@@ -145,12 +153,12 @@ function SkillsOutput() {
     <div className="output-content">
       <div className="output-section-title">🛠  Tech Stack</div>
       <div className="output-divider">{'─'.repeat(40)}</div>
-      {SKILLS_DATA.map((cat) => (
-        <div className="skill-category" key={cat.category}>
-          <div className="skill-category-label">// {cat.category}</div>
+      {SKILLS_DATA.map((category) => (
+        <div className="skill-category" key={category.category}>
+          <div className="skill-category-label">// {category.category}</div>
           <div className="skill-tags">
-            {cat.items.map((s) => (
-              <span className="skill-tag" key={s}>{s}</span>
+            {category.items.map((skill) => (
+              <span className="skill-tag" key={skill}>{skill}</span>
             ))}
           </div>
         </div>
@@ -164,13 +172,13 @@ function ProjectsOutput() {
     <div className="output-content">
       <div className="output-section-title">📂 Featured Projects</div>
       <div className="output-divider">{'─'.repeat(40)}</div>
-      {PROJECTS_DATA.map((p) => (
-        <div className="project-item" key={p.name}>
-          <div className="project-name">📦 {p.name}</div>
-          <div className="project-desc">{p.desc}</div>
+      {PROJECTS_DATA.map((project) => (
+        <div className="project-item" key={project.name}>
+          <div className="project-name">📦 {project.name}</div>
+          <div className="project-desc">{project.short}</div>
           <div className="project-meta">
-            {p.tech.map((t) => (
-              <span className="project-meta-tag" key={t}>{t}</span>
+            {project.tech.map((tech) => (
+              <span className="project-meta-tag" key={tech}>{tech}</span>
             ))}
           </div>
         </div>
@@ -184,25 +192,26 @@ function ContactOutput() {
     <div className="output-content">
       <div className="output-section-title">📬 Contact</div>
       <div className="output-divider">{'─'.repeat(40)}</div>
-      <div className="output-paragraph">
-        I'm always open to new opportunities and collaborations.
-      </div>
-      <div className="output-paragraph" style={{ marginBottom: '16px' }}>
-        Feel free to reach out through any of the channels below:
-      </div>
-      {CONTACT_DATA.map((c) => (
-        <a
-          key={c.label}
-          href={c.href}
-          target="_blank"
-          rel="noreferrer"
-          className="contact-item"
-        >
-          <span className="contact-icon">{c.icon}</span>
-          <span className="contact-label">{c.label}</span>
-          <span className="contact-value">{c.value}</span>
+      <div className="output-paragraph">I’m always open to new opportunities and collaborations.</div>
+      <div className="output-paragraph">Reach out through any of the channels below:</div>
+      {CONTACT_DATA.map((contact) => (
+        <a key={contact.label} href={contact.href} target="_blank" rel="noreferrer noopener" className="contact-item">
+          <span className="contact-icon">↗</span>
+          <span className="contact-label">{contact.label}</span>
+          <span className="contact-value">{contact.value}</span>
         </a>
       ))}
+    </div>
+  )
+}
+
+function ResumeOutput() {
+  return (
+    <div className="output-content">
+      <div className="output-section-title">📄 Resume</div>
+      <div className="output-divider">{'─'.repeat(40)}</div>
+      <div className="output-paragraph">Resume download is available in the standard portfolio view.</div>
+      <div className="output-paragraph">Use the navigation above or type <span style={{ color: 'var(--yellow)' }}>contact</span> to start a conversation.</div>
     </div>
   )
 }
@@ -213,7 +222,7 @@ function WhoamiOutput() {
       <div className="output-paragraph">
         <span style={{ color: 'var(--green)' }}>harshal-thorat</span>
         <span style={{ color: 'var(--text-muted)' }}> — </span>
-        <span style={{ color: 'var(--text-dim)' }}>Full Stack Developer | Problem Solver | Tech Enthusiast</span>
+        <span style={{ color: 'var(--text-dim)' }}>Full Stack Developer | Product-minded engineer | Problem solver</span>
       </div>
     </div>
   )
@@ -246,26 +255,21 @@ function NeofetchOutput() {
     ╲╱`}</pre>
         <div>
           {[
-            { l: 'OS', v: 'Developer Portfolio v2.0' },
-            { l: 'Host', v: 'harshal-thorat' },
-            { l: 'Kernel', v: 'React 19 + Vite 8' },
-            { l: 'Shell', v: 'interactive-console' },
-            { l: 'Theme', v: 'Cyberpunk Dark' },
-            { l: 'Terminal', v: 'Web Browser' },
-            { l: 'CPU', v: 'Creative Problem Solving Unit' },
-            { l: 'Memory', v: 'Infinite Learning Capacity' },
-            { l: 'Uptime', v: 'Since curiosity began ∞' },
-          ].map((r) => (
-            <div className="output-detail" key={r.l} style={{ marginBottom: '2px' }}>
-              <span style={{ color: 'var(--cyan)', minWidth: '100px', display: 'inline-block' }}>{r.l}</span>
-              <span style={{ color: 'var(--text-dim)' }}>{r.v}</span>
+            { label: 'OS', value: 'Developer Portfolio v3.0' },
+            { label: 'Host', value: 'harshal-thorat' },
+            { label: 'Kernel', value: 'React 19 + Vite 8' },
+            { label: 'Shell', value: 'interactive-console' },
+            { label: 'Theme', value: 'Recruiter Ready' },
+            { label: 'Terminal', value: 'Web Browser' },
+            { label: 'CPU', value: 'Creative Problem Solving Unit' },
+            { label: 'Memory', value: 'Infinite Learning Capacity' },
+            { label: 'Uptime', value: 'Since curiosity began ∞' },
+          ].map((row) => (
+            <div className="output-detail" key={row.label} style={{ marginBottom: '2px' }}>
+              <span style={{ color: 'var(--cyan)', minWidth: '100px', display: 'inline-block' }}>{row.label}</span>
+              <span style={{ color: 'var(--text-dim)' }}>{row.value}</span>
             </div>
           ))}
-          <div style={{ display: 'flex', gap: '4px', marginTop: '8px' }}>
-            {['#ff5f57', '#febc2e', '#28c840', '#3b82f6', '#a78bfa', '#22d3ee', '#f87171', '#fb923c'].map((c) => (
-              <div key={c} style={{ width: '16px', height: '16px', borderRadius: '3px', background: c }} />
-            ))}
-          </div>
         </div>
       </div>
     </div>
@@ -278,8 +282,8 @@ function LoadingSpinner() {
       <div className="world-globe">
         <div className="globe-orbit">
           <div className="globe">
-            <div className="continents"></div>
-            <div className="atmosphere"></div>
+            <div className="continents" />
+            <div className="atmosphere" />
           </div>
         </div>
       </div>
@@ -295,18 +299,13 @@ function LoadingSpinner() {
 function HireMeOutput() {
   return (
     <div className="output-content">
-      <div className="output-success">
-        ✅ Request granted! Harshal would love to work with you.
-      </div>
+      <div className="output-success">✅ Request granted! Harshal would love to work with you.</div>
       <div className="output-paragraph" style={{ marginTop: '8px' }}>
-        <span style={{ color: 'var(--green)' }}>→</span> Run{' '}
-        <span style={{ color: 'var(--yellow)' }}>contact</span> to get in touch!
+        <span style={{ color: 'var(--green)' }}>→</span> Run <span style={{ color: 'var(--yellow)' }}>contact</span> to start the conversation.
       </div>
     </div>
   )
 }
-
-/* ─── PROMPT COMPONENT ───────────────────────────────── */
 
 function PromptLine({ command }) {
   return (
@@ -324,84 +323,257 @@ function PromptLine({ command }) {
 
 function ThemeSwitcher({ viewMode, onChange }) {
   return (
-    <div className="theme-switcher">
+    <div className="theme-switcher" role="toolbar" aria-label="Portfolio mode switcher">
       <button
         type="button"
-        className={`theme-btn ${viewMode === VIEW_MODES.coder ? 'active' : ''}`}
-        onClick={() => onChange(VIEW_MODES.coder)}
+        className={`theme-btn ${viewMode === VIEW_MODES.terminal ? 'active' : ''}`}
+        onClick={() => onChange(VIEW_MODES.terminal)}
+        aria-pressed={viewMode === VIEW_MODES.terminal}
       >
-        Coder Theme
+        Terminal Mode
       </button>
       <button
         type="button"
-        className={`theme-btn ${viewMode === VIEW_MODES.nonCoder ? 'active' : ''}`}
-        onClick={() => onChange(VIEW_MODES.nonCoder)}
+        className={`theme-btn ${viewMode === VIEW_MODES.portfolio ? 'active' : ''}`}
+        onClick={() => onChange(VIEW_MODES.portfolio)}
+        aria-pressed={viewMode === VIEW_MODES.portfolio}
       >
-        Non-Coder Theme
+        Standard Portfolio Mode
       </button>
     </div>
   )
 }
 
-function NonCoderTheme() {
+function SectionHeading({ eyebrow, title, description }) {
   return (
-    <div className="non-coder-wrapper">
-      <section className="non-coder-hero">
-        <p className="non-coder-kicker">Full Stack Developer</p>
-        <h1>Harshal Thorat</h1>
-        <p>I build modern web products that are fast, accessible, and easy to use.</p>
-      </section>
-
-      <section className="non-coder-section">
-        <h2>About</h2>
-        {ABOUT_DATA.bio.filter(Boolean).slice(0, 3).map((line) => (
-          <p key={line}>{line}</p>
-        ))}
-      </section>
-
-      <section className="non-coder-section">
-        <h2>Skills</h2>
-        <div className="non-coder-grid">
-          {SKILLS_DATA.map((cat) => (
-            <article className="non-coder-card" key={cat.category}>
-              <h3>{cat.category}</h3>
-              <p>{cat.items.join(', ')}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="non-coder-section">
-        <h2>Projects</h2>
-        <div className="non-coder-grid">
-          {PROJECTS_DATA.map((project) => (
-            <article className="non-coder-card" key={project.name}>
-              <h3>{project.name}</h3>
-              <p>{project.desc}</p>
-              <small>{project.tech.join(' • ')}</small>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="non-coder-section">
-        <h2>Contact</h2>
-        <div className="non-coder-contact">
-          {CONTACT_DATA.map((contact) => (
-            <a key={contact.label} href={contact.href} target="_blank" rel="noreferrer">
-              {contact.label}: {contact.value}
-            </a>
-          ))}
-        </div>
-      </section>
+    <div className="section-heading">
+      <p className="section-eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      {description ? <p className="section-description">{description}</p> : null}
     </div>
   )
 }
 
-/* ─── MAIN APP ───────────────────────────────────────── */
+function PortfolioLayout({ onSwitchToTerminal }) {
+  return (
+    <main className="portfolio-shell">
+      <section id="hero" className="hero-section">
+        <div className="hero-copy">
+          <p className="hero-kicker">Full Stack Developer · Product-minded engineer</p>
+          <h1>Harshal Thorat</h1>
+          <p className="hero-summary">
+            Building fast, scalable web applications with React, Node.js, and a strong focus on UX, accessibility, and measurable results.
+          </p>
+          <div className="hero-tech">
+            {['React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB'].map((tech) => (
+              <span className="tech-pill" key={tech}>{tech}</span>
+            ))}
+          </div>
+          <div className="hero-actions">
+            <a className="action-btn primary" href="mailto:thoratharshal04@gmail.com">Hire Me</a>
+            <a className="action-btn secondary" href="/resume.pdf" download>Download Resume</a>
+            <a className="action-btn secondary" href="#projects">View Projects</a>
+            <a className="action-btn secondary" href="#contact">Contact</a>
+          </div>
+          <p className="hero-footnote">Prefer the terminal? Type help.</p>
+        </div>
+        <div className="hero-card">
+          <div className="hero-card-label">Why recruiters notice this profile</div>
+          <ul className="hero-card-list">
+            <li>Conversion-oriented product thinking</li>
+            <li>Accessible and performant interfaces</li>
+            <li>Clear ownership across frontend and backend</li>
+            <li>Polished, brand-forward presentation</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="about" className="content-section">
+        <SectionHeading
+          eyebrow="About"
+          title="I design and build experiences that feel effortless"
+          description="My approach pairs crisp UI, reliable engineering, and product awareness to turn complex ideas into dependable software."
+        />
+        <div className="about-grid">
+          <div className="about-card">
+            <h3>What I bring</h3>
+            <p>{ABOUT_DATA.intro}</p>
+          </div>
+          <div className="about-card">
+            <h3>Selected highlights</h3>
+            <ul className="check-list">
+              <li>2+ years building production-ready web applications</li>
+              <li>Strong focus on accessibility and Lighthouse performance</li>
+              <li>Comfortable collaborating across design, product, and engineering</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" className="content-section">
+        <SectionHeading
+          eyebrow="Skills"
+          title="Technologies I use to ship quickly and thoughtfully"
+          description="I work across the full stack, with an emphasis on modern frontend architecture and maintainable backend systems."
+        />
+        <div className="skill-grid">
+          {SKILLS_DATA.map((skillGroup) => (
+            <article className="info-card" key={skillGroup.category}>
+              <h3>{skillGroup.category}</h3>
+              <div className="tag-row">
+                {skillGroup.items.map((skill) => (
+                  <span className="tag" key={skill}>{skill}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="projects" className="content-section">
+        <SectionHeading
+          eyebrow="Projects"
+          title="Recruiter-friendly case studies with outcomes"
+          description="Each project highlights the problem, the solution, and the impact so the value is obvious at a glance."
+        />
+        <div className="project-grid">
+          {PROJECTS_DATA.map((project) => (
+            <article className="project-card" key={project.name}>
+              <div className="project-card-top">
+                <div>
+                  <h3>{project.name}</h3>
+                  <p className="project-card-short">{project.short}</p>
+                </div>
+                <span className="project-date">{project.dates}</span>
+              </div>
+              <div className="project-details">
+                <div>
+                  <span className="detail-label">Problem</span>
+                  <p>{project.problem}</p>
+                </div>
+                <div>
+                  <span className="detail-label">Solution</span>
+                  <p>{project.solution}</p>
+                </div>
+                <div>
+                  <span className="detail-label">Impact</span>
+                  <ul>
+                    {project.impact.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="project-meta-row">
+                  <div>
+                    <span className="detail-label">Role</span>
+                    <p>{project.role}</p>
+                  </div>
+                  <div>
+                    <span className="detail-label">Tech</span>
+                    <p>{project.tech.join(' • ')}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="project-links">
+                <a href={project.demo} target="_blank" rel="noreferrer noopener">Live Demo</a>
+                <a href={project.github} target="_blank" rel="noreferrer noopener">GitHub</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="resume" className="content-section">
+        <SectionHeading
+          eyebrow="Resume"
+          title="A concise snapshot built for recruiters"
+          description="Highlights, experience, education, and credentials are all in one place for easy review."
+        />
+        <div className="resume-card">
+          <div className="resume-card-main">
+            <div>
+              <h3>Selected highlights</h3>
+              <ul className="check-list">
+                <li><strong>2+ years</strong> of hands-on web development experience</li>
+                <li>Built products with a focus on conversion, clarity, and performance</li>
+                <li>Experienced in modern frontend frameworks and API-driven architecture</li>
+              </ul>
+            </div>
+            <a className="action-btn primary" href="/resume.pdf" download>Download Resume</a>
+          </div>
+          <div className="resume-grid">
+            <div className="resume-block">
+              <h4>Top skills</h4>
+              <p>React, Next.js, Node.js, TypeScript, MongoDB, UX, accessibility</p>
+            </div>
+            <div className="resume-block">
+              <h4>Education</h4>
+              <p>Bachelor of Computer Science / Software Engineering foundation</p>
+            </div>
+            <div className="resume-block">
+              <h4>Certifications</h4>
+              <p>Frontend engineering, modern JavaScript, UI/UX fundamentals</p>
+            </div>
+            <div className="resume-block">
+              <h4>Notable strengths</h4>
+              <p>Communication, ownership, rapid iteration, and polished delivery</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="content-section">
+        <SectionHeading
+          eyebrow="Terminal"
+          title="The terminal stays, but the experience now feels premium"
+          description="Use the interactive terminal below for a playful brand experience or switch back to the standard portfolio mode."
+        />
+        <div className="terminal-preview-card">
+          <div className="terminal-preview-copy">
+            <p>Type help to explore the site, or open terminal mode for the full command-line experience.</p>
+            <button className="action-btn secondary" type="button" onClick={onSwitchToTerminal}>Open Terminal Mode</button>
+          </div>
+          <div className="terminal-preview-window" aria-label="Terminal preview">
+            <div className="terminal-preview-header">
+              <span className="terminal-dot" />
+              <span className="terminal-dot" />
+              <span className="terminal-dot" />
+            </div>
+            <div className="terminal-preview-body">
+              <p>$ help</p>
+              <p>about  ·  skills  ·  projects  ·  contact</p>
+              <p className="terminal-cursor">_</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="content-section">
+        <SectionHeading
+          eyebrow="Contact"
+          title="Let’s build something meaningful"
+          description="I’m open to freelance work, product collaborations, and full-time opportunities that value quality and momentum."
+        />
+        <div className="contact-card">
+          <div className="contact-card-main">
+            <h3>Ready to connect?</h3>
+            <p>Whether you need a fast frontend, a polished product experience, or a dependable full-stack partner, I’d love to hear about it.</p>
+          </div>
+          <div className="contact-actions">
+            {CONTACT_DATA.map((contact) => (
+              <a key={contact.label} href={contact.href} target="_blank" rel="noreferrer noopener">
+                {contact.label} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
 
 function App() {
-  const [viewMode, setViewMode] = useState(VIEW_MODES.coder)
+  const [viewMode, setViewMode] = useState(VIEW_MODES.portfolio)
   const [history, setHistory] = useState(() => [
     { command: 'about', output: <AboutOutput /> },
     { command: 'skills', output: <SkillsOutput /> },
@@ -410,43 +582,44 @@ function App() {
   ])
   const [input, setInput] = useState('')
   const [cmdHistory, setCmdHistory] = useState(['about', 'skills', 'projects', 'contact'])
-const [historyIndex, setHistoryIndex] = useState(-1)
+  const [historyIndex, setHistoryIndex] = useState(-1)
   const [isGlobalLoading, setIsGlobalLoading] = useState(true)
   const bodyRef = useRef(null)
   const inputRef = useRef(null)
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight
     }
   }, [history])
 
-// Global loading simulation
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setIsGlobalLoading(false)
-    }, 1800) // 1.8s realistic load
+    }, 1200)
 
-    return () => clearTimeout(timer)
+    return () => window.clearTimeout(timer)
   }, [])
 
-  // Auto-focus input
   useEffect(() => {
-    if (viewMode === VIEW_MODES.coder) {
+    if (viewMode === VIEW_MODES.terminal) {
       inputRef.current?.focus()
     }
   }, [viewMode])
 
-  // Toggle global theme class for full-site styling
   useEffect(() => {
-    const className = 'theme-noncoder'
-    if (viewMode === VIEW_MODES.nonCoder) {
-      document.body.classList.add(className)
-    } else {
-      document.body.classList.remove(className)
+    document.body.classList.toggle('theme-noncoder', viewMode === VIEW_MODES.portfolio)
+    document.documentElement.style.setProperty('--app-accent', viewMode === VIEW_MODES.portfolio ? '#2563eb' : '#4ade80')
+    return () => {
+      document.body.classList.remove('theme-noncoder')
+      document.documentElement.style.removeProperty('--app-accent')
     }
-    return () => document.body.classList.remove(className)
+  }, [viewMode])
+
+  useEffect(() => {
+    document.title = viewMode === VIEW_MODES.terminal
+      ? 'Harshal Thorat | Interactive Terminal Portfolio'
+      : 'Harshal Thorat | Full Stack Developer'
   }, [viewMode])
 
   const processCommand = useCallback((cmd) => {
@@ -471,6 +644,9 @@ const [historyIndex, setHistoryIndex] = useState(-1)
         break
       case 'contact':
         output = <ContactOutput />
+        break
+      case 'resume':
+        output = <ResumeOutput />
         break
       case 'whoami':
         output = <WhoamiOutput />
@@ -504,20 +680,18 @@ const [historyIndex, setHistoryIndex] = useState(-1)
     setInput('')
   }, [])
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
       processCommand(input)
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
       if (cmdHistory.length > 0) {
-        const newIndex = historyIndex === -1
-          ? cmdHistory.length - 1
-          : Math.max(0, historyIndex - 1)
+        const newIndex = historyIndex === -1 ? cmdHistory.length - 1 : Math.max(0, historyIndex - 1)
         setHistoryIndex(newIndex)
         setInput(cmdHistory[newIndex])
       }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault()
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
       if (historyIndex !== -1) {
         const newIndex = historyIndex + 1
         if (newIndex >= cmdHistory.length) {
@@ -528,12 +702,14 @@ const [historyIndex, setHistoryIndex] = useState(-1)
           setInput(cmdHistory[newIndex])
         }
       }
-    } else if (e.key === 'Tab') {
-      e.preventDefault()
-      const match = COMMANDS.find((c) => c.startsWith(input.toLowerCase()) && c !== input.toLowerCase())
-      if (match) setInput(match)
-    } else if (e.key === 'l' && e.ctrlKey) {
-      e.preventDefault()
+    } else if (event.key === 'Tab') {
+      event.preventDefault()
+      const match = COMMANDS.find((command) => command.startsWith(input.toLowerCase()) && command !== input.toLowerCase())
+      if (match) {
+        setInput(match)
+      }
+    } else if (event.key === 'l' && event.ctrlKey) {
+      event.preventDefault()
       setHistory([])
     }
   }
@@ -542,8 +718,8 @@ const [historyIndex, setHistoryIndex] = useState(-1)
     inputRef.current?.focus()
   }
 
-  const handleSuggestion = (cmd) => {
-    processCommand(cmd)
+  const handleSuggestion = (command) => {
+    processCommand(command)
     inputRef.current?.focus()
   }
 
@@ -552,13 +728,28 @@ const [historyIndex, setHistoryIndex] = useState(-1)
   }
 
   return (
-    <div className={`page-shell ${viewMode === VIEW_MODES.nonCoder ? 'theme-noncoder' : 'theme-coder'}`}>
-      <ThemeSwitcher viewMode={viewMode} onChange={setViewMode} />
+    <div className={`page-shell ${viewMode === VIEW_MODES.portfolio ? 'theme-noncoder' : 'theme-coder'}`}>
+      <header className="top-bar">
+        <a className="brand" href="#hero" aria-label="Harshal Thorat home">Harshal Thorat</a>
+        <nav className="top-nav" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#resume">Resume</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div className="top-bar-actions">
+          <a className="mini-link" href="https://github.com/Harry007056" target="_blank" rel="noreferrer noopener">GitHub</a>
+          <a className="mini-link" href="https://www.linkedin.com/in/harshal-thorat-431264281/" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+          <a className="mini-link" href="mailto:thoratharshal04@gmail.com">Email</a>
+          <a className="mini-link" href="/resume.pdf" download>Resume</a>
+          <ThemeSwitcher viewMode={viewMode} onChange={setViewMode} />
+        </div>
+      </header>
 
-      {viewMode === VIEW_MODES.coder ? (
+      {viewMode === VIEW_MODES.terminal ? (
         <div className="terminal-wrapper">
           <div className="terminal">
-            {/* Title Bar */}
             <div className="terminal-titlebar">
               <div className="titlebar-dots">
                 <div className="titlebar-dot red" />
@@ -567,45 +758,32 @@ const [historyIndex, setHistoryIndex] = useState(-1)
               </div>
               <div className="titlebar-title">harshal@portfolio: ~</div>
               <div className="titlebar-tabs">
-                <button className="titlebar-tab active">bash</button>
-                <button className="titlebar-tab" onClick={() => handleSuggestion('neofetch')}>neofetch</button>
+                <button type="button" className="titlebar-tab active">bash</button>
+                <button type="button" className="titlebar-tab" onClick={() => handleSuggestion('neofetch')}>neofetch</button>
               </div>
             </div>
 
-            {/* Terminal Body */}
             <div className="terminal-body" ref={bodyRef} onClick={handleBodyClick}>
-              {/* Welcome Banner */}
               <pre className="ascii-banner">{ASCII_ART}</pre>
-              <div className="welcome-text">
-                Welcome to Harshal Thorat's interactive portfolio terminal.
-              </div>
-              <div className="welcome-hint">
-                Type <span>help</span> to see available commands, or click the suggestions below.
-              </div>
+              <div className="welcome-text">Welcome to Harshal Thorat&apos;s interactive portfolio terminal.</div>
+              <div className="welcome-hint">Type <span>help</span> to see available commands, or use the navigation above.</div>
 
-              {/* Command History */}
-              {history.map((entry, i) => (
-                <div className="output-block" key={i}>
+              {history.map((entry, index) => (
+                <div className="output-block" key={`${entry.command}-${index}`}>
                   <PromptLine command={entry.command} />
                   {entry.output}
                 </div>
               ))}
             </div>
 
-            {/* Suggestion Bar */}
             <div className="suggestion-bar">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  className="suggestion-chip"
-                  onClick={() => handleSuggestion(s)}
-                >
-                  {s}
+              {SUGGESTIONS.map((suggestion) => (
+                <button key={suggestion} className="suggestion-chip" type="button" onClick={() => handleSuggestion(suggestion)}>
+                  {suggestion}
                 </button>
               ))}
             </div>
 
-            {/* Input Area */}
             <div className="input-area">
               <div className="input-line">
                 <span className="prompt-user">harshal</span>
@@ -619,7 +797,7 @@ const [historyIndex, setHistoryIndex] = useState(-1)
                   type="text"
                   className="input-field"
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={(event) => setInput(event.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="type a command..."
                   spellCheck={false}
@@ -628,7 +806,6 @@ const [historyIndex, setHistoryIndex] = useState(-1)
               </div>
             </div>
 
-            {/* Status Bar */}
             <div className="terminal-statusbar">
               <div className="statusbar-left">
                 <div className="statusbar-indicator">
@@ -641,13 +818,13 @@ const [historyIndex, setHistoryIndex] = useState(-1)
               <div>
                 <span>commands: {cmdHistory.length}</span>
                 <span style={{ margin: '0 8px' }}>|</span>
-                <span>v2.0.0</span>
+                <span>v3.0.0</span>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <NonCoderTheme />
+        <PortfolioLayout onSwitchToTerminal={() => setViewMode(VIEW_MODES.terminal)} />
       )}
     </div>
   )

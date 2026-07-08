@@ -1,0 +1,11 @@
+warning: in the working copy of 'portfolio/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'portfolio/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'portfolio/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'portfolio/src/App.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'portfolio/src/App.jsx', LF will be replaced by CRLF the next time Git touches it
+ portfolio/README.md         |  211 [32m++[m[31m-----[m
+ portfolio/index.html        |   37 [32m+[m[31m-[m
+ portfolio/package-lock.json |  239 [32m++++[m[31m----[m
+ portfolio/src/App.css       | 1415 [32m+++++++++++++++++++[m[31m------------------------[m
+ portfolio/src/App.jsx       |  621 [32m++++++++++++[m[31m-------[m
+ 5 files changed, 1223 insertions(+), 1300 deletions(-)

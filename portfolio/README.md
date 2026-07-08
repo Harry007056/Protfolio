@@ -1,199 +1,72 @@
+# Harshal Thorat — Premium Terminal Portfolio
 
-# ⚡ Harshal Thorat — Interactive Terminal Portfolio
-An **interactive terminal-style portfolio website** built for developers who love the command line.
-This portfolio simulates a **Linux terminal experience** where visitors can explore information using commands.
+A polished, recruiter-friendly portfolio that blends a terminal-first identity with a modern standard browsing experience. It is designed to feel interactive, credible, and easy to explore in under 10 seconds.
 
-Designed and developed by **Harshal Thorat – Full Stack Developer** from India 🇮🇳.
+## Overview
 
----
+This project presents Harshal Thorat as a full-stack developer with:
+- a strong terminal brand,
+- clear professional positioning,
+- accessible and responsive UI,
+- polished project storytelling,
+- quick access to contact and resume information.
 
-# 🖥 Preview
+## Screenshots
 
-```
-harshal@portfolio:~$ help
+Add screenshots or a GIF in the project assets folder to showcase the hero, project cards, and terminal experience.
 
-Available Commands
-about       → Learn about me
-skills      → View my tech stack
-projects    → See my projects
-contact     → Get my contact info
-neofetch    → System-style developer info
-clear       → Clear terminal
-help        → Show commands
-```
+## Features
 
-Visitors can **navigate the portfolio like a real terminal**.
+- Terminal mode with command suggestions and help output
+- Standard portfolio mode with a strong hero and sticky navigation
+- Recruiter-friendly project cards with problem, solution, impact, role, dates, and links
+- Sticky contact bar with GitHub, LinkedIn, email, and resume access
+- Responsive layout with accessibility-focused styling and keyboard support
+- SEO metadata, structured data, robots and sitemap support
 
----
+## Tech Stack
 
-# ✨ Features
+- React 19
+- Vite 8
+- CSS Modules-style custom styling in App.css
+- ESLint and React refresh tooling
 
-💻 **Terminal-style UI**
-Command-based navigation like a Linux shell.
+## Architecture
 
-⚡ **Blazing Fast**
-Powered by **React 19 + Vite 8**.
+- App.jsx contains the portfolio content, terminal logic, and reusable UI components.
+- App.css contains the global styling, responsive rules, and terminal visuals.
+- public contains resume assets, metadata, and sitemap assets.
 
-🎨 **Cyberpunk Theme**
-Custom CSS with **JetBrains Mono terminal font**.
-
-🔀 **Non-Coder Mode Toggle**
-Allows normal users to browse without commands.
-
-📱 **Responsive Design**
-Works across desktop, tablet, and mobile.
-
-🧠 **Developer Inspired Commands**
-
-* about
-* skills
-* projects
-* contact
-* neofetch
-* help
-* clear
-
----
-
-# 🛠 Tech Stack
-
-Frontend
-
-* ⚛ React 19
-* ⚡ Vite 8 (beta)
-
-Styling
-
-* 🎨 Custom CSS
-* 🖥 JetBrains Mono
-* ✨ Inter Font
-
-Tools
-
-* Git
-* Vercel (for deployment)
-
----
-
-# 📂 Project Structure
-
-```
-portfolio
-│
-├── public
-├── src
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── styles
-│
-├── index.html
-├── package.json
-└── README.md
-```
-
----
-
-# 🧠 Available Commands
-
-| Command    | Description                          |
-| ---------- | ------------------------------------ |
-| `about`    | Shows developer bio                  |
-| `skills`   | Displays tech stack                  |
-| `projects` | Lists portfolio projects             |
-| `contact`  | Shows contact info                   |
-| `neofetch` | Terminal system-style developer info |
-| `help`     | Lists available commands             |
-| `clear`    | Clears terminal                      |
-
----
-
-# 🚀 Quick Start
-
-### 1️⃣ Clone the repository
-
-```bash
-git clone https://github.com/Harry007056/portfolio.git
-```
-
-### 2️⃣ Navigate to project
-
-```bash
-cd portfolio
-```
-
-### 3️⃣ Install dependencies
+## Installation
 
 ```bash
 npm install
-```
-
-### 4️⃣ Run development server
-
-```bash
 npm run dev
 ```
 
-App will run on:
+## Environment Variables
 
-```
-http://localhost:5173
-```
+No environment variables are required for the current build.
 
----
+## Deployment
 
-# 🌐 Live Demo
+This project is ready for deployment on Vercel or Netlify.
 
-Deploy easily using **Vercel**.
-
-```
-https://portfolio.vercel.app
+```bash
+npm run build
 ```
 
-*(Replace with your actual deployed URL)*
+## Live Demo
 
----
+Update the deployment URL once the site is published.
 
-# 📧 Contact
+## Future Improvements
 
-**Harshal Thorat**
-Full Stack Developer
+- Add real project screenshots and subtle animations
+- Connect the project links to live deployed applications
+- Expand the resume into a richer PDF and add a downloadable cover letter
 
-📩 Email
-[thoratharshal04@gmail.com](mailto:thoratharshal04@gmail.com)
+## License
 
-🐙 GitHub
-[https://github.com/Harry007056](https://github.com/Harry007056)
-
-💼 LinkedIn
-[https://linkedin.com/in/harshal-thorat-431264281](https://linkedin.com/in/harshal-thorat-431264281)
-
----
-
-# 📸 Screenshots
-
-Add screenshots or GIF here showing the terminal interaction.
-
-Example:
-
-```
-assets/portfolio-demo.gif
-```
-
----
-
-# 📜 License
-
-This project is licensed under the **MIT License**.
-
----
-
-# ⭐ Support
-
-If you like this project, consider giving it a ⭐ on GitHub.
-
----
-
-💻 Built with passion by **Harshal Thorat**
-
----
+MIT License
 
