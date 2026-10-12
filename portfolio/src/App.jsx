@@ -499,7 +499,7 @@ function PortfolioLayout({ onSwitchToTerminal }) {
                 <li>Experienced in modern frontend frameworks and API-driven architecture</li>
               </ul>
             </div>
-            <a className="action-btn primary" href="/resume.pdf" download>Download Resume</a>
+            <a className="action-btn primary" href="/Harshal thorat.pdf" download>Download Resume</a>
           </div>
           <div className="resume-grid">
             <div className="resume-block">
@@ -742,7 +742,7 @@ function App() {
           <a className="mini-link" href="https://github.com/Harry007056" target="_blank" rel="noreferrer noopener">GitHub</a>
           <a className="mini-link" href="https://www.linkedin.com/in/harshal-thorat-431264281/" target="_blank" rel="noreferrer noopener">LinkedIn</a>
           <a className="mini-link" href="mailto:thoratharshal04@gmail.com">Email</a>
-          <a className="mini-link" href="/resume.pdf" download>Resume</a>
+          <a className="mini-link" href="/Harshal thorat.pdf" download>Resume</a>
           <ThemeSwitcher viewMode={viewMode} onChange={setViewMode} />
         </div>
       </header>
