@@ -371,7 +371,7 @@ function PortfolioLayout({ onSwitchToTerminal }) {
           </div>
           <div className="hero-actions">
             <a className="action-btn primary" href="mailto:thoratharshal04@gmail.com">Hire Me</a>
-            <a className="action-btn secondary" href="/Harshal_Thorat_Resume.pdf" download>Download Resume</a>
+            <a className="action-btn secondary" href="/Harshal thorat.pdf" download>Download Resume</a>
             <a className="action-btn secondary" href="#projects">View Projects</a>
             <a className="action-btn secondary" href="#contact">Contact</a>
           </div>
